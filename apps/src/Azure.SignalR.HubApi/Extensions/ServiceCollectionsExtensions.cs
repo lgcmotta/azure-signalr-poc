@@ -17,7 +17,8 @@ internal static class ServiceCollectionsExtensions
         services.AddSingleton<ReadinessHealthCheck>();
 
         services.AddHealthChecks()
-            .AddCheck<ReadinessHealthCheck>("Readiness", tags: ["ready"]);
+            .AddCheck<ReadinessHealthCheck>("Readiness", tags: ["ready"])
+            .AddNpgSql(tags: );
 
         return services;
     }

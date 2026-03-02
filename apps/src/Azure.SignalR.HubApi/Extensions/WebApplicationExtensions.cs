@@ -5,6 +5,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Net.Mime;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.SignalR.HubApi.Extensions;
 
@@ -20,12 +21,11 @@ internal static class WebApplicationExtensions
         return app;
     }
 
-
     internal static WebApplication MapLivenessHealthCheck(this WebApplication app)
     {
         app.MapHealthChecks("/healthz/live", new HealthCheckOptions
         {
-            Predicate = check => !check.Tags.Contains("ready"),
+            Predicate = _ => false,
             ResponseWriter = async (context, report) =>
             {
                 var components = report.Entries.ToDictionary(
